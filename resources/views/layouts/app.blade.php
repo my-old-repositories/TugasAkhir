@@ -1,6 +1,7 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}"> 
 <head>
+   
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -27,6 +28,10 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Style untuk Footer -->
+    <link rel="stylesheet" type="text/css" href="app.css">
+
 
     <!-- Loading -->
     <style type="text/css">
@@ -62,6 +67,7 @@
       </div>
     </div>
     <div id="app">
+        <!-- Navbar -->
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -90,12 +96,26 @@
                                 </li>
                             @endif
                         @else
+                            <!-- <li class="nav-item dropdown">
+                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="/logout" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>Menu
+                                    <span class="caret"></span>
+                                 </a>
+                                 <ul class="dropdown-menu">
+                                     
+                                 </ul>
+                            </li> -->
+
                             <li class="nav-item dropdown">
+                                     
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="/logout" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }} <span class="caret"></span>
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a href="{{ url('/artikel') }}" class="dropdown-item" >Artikel</a>
+                                    <a href="{{ url('/tips') }}" class="dropdown-item">Tips</a>
+                                    <a href="{{ url('/coronavirus') }}" class="dropdown-item">Laporan COVID-19</a>
+                                    <a href="{{ url('/tentang-kami') }}" class="dropdown-item">Tentang Kami</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
@@ -113,9 +133,12 @@
             </div>
         </nav>
 
-        <main class="py-4">
+
+        <main class="py-4 " >
             @yield('content')
         </main>
     </div>
+    </div>
 </body>
+   
 </html>

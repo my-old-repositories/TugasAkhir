@@ -18,6 +18,7 @@
         
             {{-- Hidden Inputs --}}
             <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
+            <input type="hidden" name="id_artikel" value="{{ $id_artikel }}">
 
             <button class="btn btn-success btn-block mt-3">Buat!</button>
             </form>

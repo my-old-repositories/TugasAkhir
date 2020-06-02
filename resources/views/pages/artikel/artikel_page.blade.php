@@ -4,11 +4,17 @@
     @if (\Session::has('role'))
         <div class="container">
 
+            @if(\Session::has('denied'))
+                <div class="alert alert-danger">
+                    <p>{{ session('denied') }}</p>
+                </div>
+            @endif
+
             <h1 class="display-4 text-center">Apa yang ingin anda lakukan sekarang?</h1>
 
             <div class="row mt-5">
                 <div class="col-sm-3 mx-auto">
-                    <a href="/artikel/buat" style="text-decoration: none;">
+                    <a href="{{ url('/artikel/buat') }}" style="text-decoration: none;">
                         <div class="card">
                             <img class="card-img-top" src="images/create_article.png" alt="Card image cap">
                             <div class="card-body">
@@ -18,7 +24,7 @@
                     </a>
                 </div>
                 <div class="col-sm-3 mx-auto">
-                    <a href="/artikel/ubah/{{Auth::user()->id}}" style="text-decoration: none;">
+                    <a href="artikel/ubah/{{Auth::user()->id}} " style="text-decoration: none;">
                         <div class="card">
                             <img class="card-img-top img-thumbnail" src="images/edit_article.png" alt="Card image cap" style="height: 250px;">
                             <div class="card-body">
@@ -28,7 +34,7 @@
                     </a>
                 </div>
                 <div class="col-sm-3 mx-auto">
-                    <a href="/artikel/lihat" style="text-decoration: none;">
+                    <a href="{{ url('/artikel/lihat') }}" style="text-decoration: none;">
                         <div class="card">
                             <img class="card-img-top" src="images/read_article.png" alt="Card image cap">
                             <div class="card-body">
@@ -47,7 +53,7 @@
             
             <div class="row mt-5">
                 <div class="col-sm-3 mx-auto">
-                    <a href="/artikel/lihat" style="text-decoration: none;">
+                    <a href="{{ url('/artikel/lihat') }}" style="text-decoration: none;">
                         <div class="card">
                             <img class="card-img-top" src="images/read_article.png" alt="Card image cap">
                             <div class="card-body">

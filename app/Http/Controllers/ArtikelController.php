@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Artikel;
 use App\Users;
+use Auth;
 
 class ArtikelController extends Controller
 {
@@ -39,9 +40,9 @@ class ArtikelController extends Controller
         $artikel->id_user = $request->id_user;
 
         if ($artikel->save()) {
-            return redirect('/artikel/lihat')->with('Sukses','Artikel Berhasil Dibuat!');
+            return redirect('/artikel/lihat')->with(['success' => ' Data Berhasil ditambahkan']);
         }else{
-            return redirect('/artikel/buat')->with('Gagal','Artikel Gagal Dibuat!');
+            return redirect('/artikel/buat')->with(['erorr' => ' Data Gagal ditambahkan']);
         }
 
     }
@@ -64,6 +65,9 @@ class ArtikelController extends Controller
 
     public function ubah_list($id_author)
     {
+        if (Auth::user()->id != $id_author) {
+            return redirect('/artikel')->with('denied','Access Denied!');
+        }
         $ubah = Artikel::where('id_user', $id_author)->get();
         return view('pages.artikel.list_ubah_artikel', ['ubah' => $ubah]);
     }
@@ -71,15 +75,18 @@ class ArtikelController extends Controller
     public function ubah_form($id_author, $id_artikel)
     {
         $ubah = Artikel::where('id',$id_artikel)->where('id_user',$id_author)->get();
-        return view('pages.artikel.ubah_artikel', ['ubah' => $ubah]);
+        return view('pages.artikel.ubah_artikel', ['ubah' => $ubah,'id_artikel' => $id_artikel]);
     }
 
     public function ubah_proses(Request $request)
     {
-        $status = Artikel::where('id_user',$request->id_user)->update([
+        $imageName = time().'.'.$request->foto->extension();
+        $request->foto->move(public_path('images'), $imageName);
+
+        $status = Artikel::where('id_user',$request->id_user)->where('id',$request->id_artikel)->update([
             'judul' => $request->judul,
             'konten' => $request->konten,
-            'foto' => $request->foto
+            'foto' => $imageName
         ]);
         if ($status) {
             return redirect('/artikel/ubah/'.$request->id_user)->with('ubah-sukses','Berhasil Diubah');
